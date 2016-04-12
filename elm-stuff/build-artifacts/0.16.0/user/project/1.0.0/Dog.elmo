@@ -1,0 +1,96 @@
+Elm.Dog = Elm.Dog || {};
+Elm.Dog.make = function (_elm) {
+   "use strict";
+   _elm.Dog = _elm.Dog || {};
+   if (_elm.Dog.values) return _elm.Dog.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Effects = Elm.Effects.make(_elm),
+   $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $StartApp = Elm.StartApp.make(_elm),
+   $Time = Elm.Time.make(_elm);
+   var _op = {};
+   var returnEle = function (sprite) {
+      return A4($Graphics$Element.croppedImage,{ctor: "_Tuple2",_0: sprite.currentX,_1: sprite.currentY},sprite.tileHeight,sprite.tileWidth,sprite.image);
+   };
+   var view = F2(function (address,s) {
+      var onInput = F2(function (address,contentToValue) {
+         return A3($Html$Events.on,"input",$Html$Events.targetValue,function (_p0) {    return A2($Signal.message,address,contentToValue(_p0));});
+      });
+      return A2($Html.div,_U.list([]),_U.list([$Html.fromElement(returnEle(s))]));
+   });
+   var advance = function (sprite) {
+      return _U.cmp(sprite.currentX,sprite.xDim - 80) < 0 ? _U.update(sprite,{currentX: sprite.currentX + 40}) : _U.update(sprite,{currentX: sprite.startingX});
+   };
+   var update = F2(function (action,s) {
+      var s$ = function () {    var _p1 = action;return advance(s);}();
+      return {ctor: "_Tuple2",_0: s$,_1: $Effects.none};
+   });
+   var dogSheet = {image: "dogSheet.png"
+                  ,xDim: 400
+                  ,yDim: 120
+                  ,startingX: 88
+                  ,startingY: 9
+                  ,currentX: 88
+                  ,currentY: 7
+                  ,rows: 3
+                  ,columns: 10
+                  ,tileWidth: 40
+                  ,tileHeight: 40};
+   var Sprite = function (a) {
+      return function (b) {
+         return function (c) {
+            return function (d) {
+               return function (e) {
+                  return function (f) {
+                     return function (g) {
+                        return function (h) {
+                           return function (i) {
+                              return function (j) {
+                                 return function (k) {
+                                    return {image: a
+                                           ,xDim: b
+                                           ,yDim: c
+                                           ,startingX: d
+                                           ,startingY: e
+                                           ,currentX: f
+                                           ,currentY: g
+                                           ,rows: h
+                                           ,columns: i
+                                           ,tileWidth: j
+                                           ,tileHeight: k};
+                                 };
+                              };
+                           };
+                        };
+                     };
+                  };
+               };
+            };
+         };
+      };
+   };
+   var Tick = function (a) {    return {ctor: "Tick",_0: a};};
+   var app = $StartApp.start({view: view
+                             ,update: update
+                             ,init: {ctor: "_Tuple2",_0: dogSheet,_1: $Effects.none}
+                             ,inputs: _U.list([A2($Signal.map,Tick,$Time.fps(5))])});
+   var main = app.html;
+   return _elm.Dog.values = {_op: _op
+                            ,Tick: Tick
+                            ,Sprite: Sprite
+                            ,dogSheet: dogSheet
+                            ,advance: advance
+                            ,returnEle: returnEle
+                            ,view: view
+                            ,update: update
+                            ,app: app
+                            ,main: main};
+};
