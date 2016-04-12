@@ -7,3 +7,7 @@ I wanted to make a game in Elm and all the examples I found used gifs to simulat
 ### Issues
 
 Currently the image motion isn't very smooth.
+
+### See it work
+
+[dog sprite](http://jeffreyleebaird.com/sprite)
